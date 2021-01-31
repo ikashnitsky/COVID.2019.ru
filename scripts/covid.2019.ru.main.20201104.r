@@ -30,7 +30,7 @@
 # # 	tz = "MSK")
 # #
 # # dataset.recovered.primary.ls[[i]] <- cbind.data.frame(
-# # 	ISOdatetime.recovered, 
+# # 	ISOdatetime.recovered,
 # # 	primary_dataset_backup.json.ls[[i]]$i,
 # # 	primary_dataset_backup.json.ls[[i]]$r,
 # # 	primary_dataset_backup.json.ls[[i]]$d
@@ -111,7 +111,7 @@ for(i in 1:length(covid.2019.ru.dyn.tot.derived)){
 		}
 	covid.2019.ru.dyn.tot.derived[[i]]$d.7 <- c(d.7, NA, NA, NA)
 
-	R.RPN <- rep(NA,8) 
+	R.RPN <- rep(NA,8)
 	for(k in 9:(nrow(covid.2019.ru.dyn.tot.derived[[i]]))){
 	R.RPN <- c(R.RPN, sum(covid.2019.ru.dyn.tot.derived[[i]]$i[(k):(k-3)], na.rm=TRUE)/sum(covid.2019.ru.dyn.tot.derived[[i]]$i[(k-4):(k-7)], na.rm=TRUE))
 	}
@@ -148,7 +148,7 @@ colnames(covid.2019.ru.dyn) <- c("TIME","i","r","d")
 
 DETECTED <- NULL
 
-for(i in 1:length(covid.2019.ru.dyn.tot.primary[[i]]$i)){
+for(i in 1:length(covid.2019.ru.dyn.tot.primary)){
 DETECTED <- c(DETECTED, sum(covid.2019.ru.dyn.tot.primary[[i]]$i))
 }
 

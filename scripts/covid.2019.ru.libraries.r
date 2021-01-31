@@ -13,3 +13,9 @@ library(rjson)
 library(xlsx)
 
 Sys.setlocale("LC_TIME", "en_US.UTF-8")
+
+# UPD  2021-02-01 ------------------------------
+# Ilya Kashnitsky: for the improved maps
+library(sf)
+library(rmapshaper)
+

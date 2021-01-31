@@ -37,8 +37,8 @@ dir.create("../plots/regions/increments/i.7.var/")
 png("../plots/01.COVID.2019.cumulated.TARD.png", height=750, width=1000, res=120, pointsize=10)
 par(mar=c(6,5,4,5)+.1, lwd=2)
 
-plot(covid.2019.ru.dyn$TIME, cumsum(covid.2019.ru.dyn$i), 
-type="n", 
+plot(covid.2019.ru.dyn$TIME, cumsum(covid.2019.ru.dyn$i),
+type="n",
 main="Russian Federation",
 xlab="",
 ylab="COVID-2019 cases detected",
@@ -91,8 +91,8 @@ dev.off()
 png("../plots/02.COVID.2019.cumulated.TARD.log10.png", height=750, width=1000, res=120, pointsize=10)
 par(mar=c(6,5,4,5)+.1, lwd=2)
 
-plot(covid.2019.ru.dyn$TIME, log10(cumsum(covid.2019.ru.dyn$i)), 
-type="n", 
+plot(covid.2019.ru.dyn$TIME, log10(cumsum(covid.2019.ru.dyn$i)),
+type="n",
 ylim=c(0, log10(tail(cumsum(covid.2019.ru.dyn$i), 1))),
 main="Russian Federation",
 xlab="",
@@ -150,9 +150,9 @@ png("../plots/03.COVID.2019.CaseFatalityRatio.dyn.png", height=750, width=1000, 
 par(mar=c(6,5,4,5)+.1)
 
 plot(
-covid.2019.ru.dyn$TIME[49:nrow(covid.2019.ru.dyn)], 
-cumsum(covid.2019.ru.dyn$d)[49:nrow(covid.2019.ru.dyn)]/(cumsum(covid.2019.ru.dyn$r[49:nrow(covid.2019.ru.dyn)]) + cumsum(covid.2019.ru.dyn$d[49:nrow(covid.2019.ru.dyn)])), 
-type="l", 
+covid.2019.ru.dyn$TIME[49:nrow(covid.2019.ru.dyn)],
+cumsum(covid.2019.ru.dyn$d)[49:nrow(covid.2019.ru.dyn)]/(cumsum(covid.2019.ru.dyn$r[49:nrow(covid.2019.ru.dyn)]) + cumsum(covid.2019.ru.dyn$d[49:nrow(covid.2019.ru.dyn)])),
+type="l",
 ylim=c(0, max(cumsum(covid.2019.ru.dyn$d[49:nrow(covid.2019.ru.dyn)])/(cumsum(covid.2019.ru.dyn$r[49:nrow(covid.2019.ru.dyn)]) + cumsum(covid.2019.ru.dyn$d[49:nrow(covid.2019.ru.dyn)])))),
 main=paste("Russian Federation, Case Fatality Ratio / ", tail(covid.2019.ru.dyn$TIM, 1)),
 xlab="",
@@ -176,16 +176,16 @@ lty=3
 )
 
 lines(
-covid.2019.ru.dyn$TIME[49:nrow(covid.2019.ru.dyn)], 
-cumsum(covid.2019.ru.dyn$d[49:nrow(covid.2019.ru.dyn)])/cumsum(covid.2019.ru.dyn$i[49:nrow(covid.2019.ru.dyn)]), 
+covid.2019.ru.dyn$TIME[49:nrow(covid.2019.ru.dyn)],
+cumsum(covid.2019.ru.dyn$d[49:nrow(covid.2019.ru.dyn)])/cumsum(covid.2019.ru.dyn$i[49:nrow(covid.2019.ru.dyn)]),
 col=2)
 
 lines(
-covid.2019.ru.dyn$TIME[49:nrow(covid.2019.ru.dyn)], 
+covid.2019.ru.dyn$TIME[49:nrow(covid.2019.ru.dyn)],
 sqrt(
 (cumsum(covid.2019.ru.dyn$d[49:nrow(covid.2019.ru.dyn)])/(cumsum(covid.2019.ru.dyn$r[49:nrow(covid.2019.ru.dyn)]) + cumsum(covid.2019.ru.dyn$d[49:nrow(covid.2019.ru.dyn)]))) *
 (cumsum(covid.2019.ru.dyn$d[49:nrow(covid.2019.ru.dyn)])/cumsum(covid.2019.ru.dyn$i[49:nrow(covid.2019.ru.dyn)]))
-), 
+),
 lty=3,
 col=2)
 
@@ -215,9 +215,9 @@ legend=c(
 	)
 )
 
-axis.POSIXct(1, 
-at=seq(min(covid.2019.ru.dyn$TIME), max(covid.2019.ru.dyn$TIME), by="week"), 
-format = "%Y-%m-%d", 
+axis.POSIXct(1,
+at=seq(min(covid.2019.ru.dyn$TIME), max(covid.2019.ru.dyn$TIME), by="week"),
+format = "%Y-%m-%d",
 las=2)
 axis(2)
 
@@ -226,23 +226,23 @@ dev.off()
 ################################################################
 # Density maps
 
-ru.shape <- readOGR("../misc/ESRI.shapefile")
+ru.shape <- readOGR("../misc/ESRI.shapefile", layer = "simplified")
 
 ################################################################
 # Map / regions as areas / colour intensity proportional
 # to the total number of cases;
 
-png("../plots/10.COVID.2019.map.density.regions.png", height=750, width=1000, res=120, pointsize=10)
-par(fg="white", bg=rgb(0,.1,.2,1))
+png("../plots/10.COVID.2019.map.density.regions.png", height=750, width=1500, res=120, pointsize=10)
+par(fg="white", bg=rgb(0,.1,.2,1), mar=c(4,5,4,5)+.1)
 
 plot(ru.shape[order(ru.shape$LOCUS),], xlim=c(20,180), col="white", border="white")
-plot(ru.shape[order(ru.shape$LOCUS),], xlim=c(20,180), 
-col=rgb(.3,0,0,(log10(pop.derived$DETECTED)/max(log10(pop.derived$DETECTED)))^4), 
-border=rgb(.3,0,0,((log10(pop.derived$DETECTED)/max(log10(pop.derived$DETECTED)))^4)/4), 
+plot(ru.shape[order(ru.shape$LOCUS),], xlim=c(20,180),
+col=rgb(.3,0,0,(log10(pop.derived$DETECTED)/max(log10(pop.derived$DETECTED)))^4),
+border=rgb(.3,0,0,((log10(pop.derived$DETECTED)/max(log10(pop.derived$DETECTED)))^4)/4),
 add=TRUE)
 
-mtext(paste("Total COVID-2019 cases, as of", tail(RU.TIME, 1), "\nThe lighter, the less"), 
-side=1, line=1) 
+mtext(paste("Total COVID-2019 cases, as of", tail(RU.TIME, 1), "\nThe lighter, the less"),
+side=1, line=1)
 mtext("Russian Federation", font=2, cex=1.2, side=3, line=0)
 
 dev.off()
@@ -251,17 +251,17 @@ dev.off()
 # Map / regions as areas / colour intensity proportional
 # to the total number of cases per 100K inhabitants;
 
-png("../plots/11.COVID.2019.map.density.regions.per_100K.png", height=750, width=1000, res=120, pointsize=10)
+png("../plots/11.COVID.2019.map.density.regions.per_100K.png", height=750, width=1500, res=120, pointsize=10)
 par(fg="white", bg=rgb(0,.1,.2,1))
 
 plot(ru.shape[order(ru.shape$LOCUS),], xlim=c(20,180), col="white", border="white")
-plot(ru.shape[order(ru.shape$LOCUS),], xlim=c(20,180), 
-col=rgb(.3,0,0,(pop.derived$DETECTED.100K/max(pop.derived$DETECTED.100K))), 
-border=rgb(.3,0,0,((pop.derived$DETECTED.100K/max(pop.derived$DETECTED.100K)))/4), 
+plot(ru.shape[order(ru.shape$LOCUS),], xlim=c(20,180),
+col=rgb(.3,0,0,(pop.derived$DETECTED.100K/max(pop.derived$DETECTED.100K))),
+border=rgb(.3,0,0,((pop.derived$DETECTED.100K/max(pop.derived$DETECTED.100K)))/4),
 add=TRUE)
 
-mtext(paste("Total COVID-2019 cases per 100K, as of", tail(RU.TIME, 1), "\nThe lighter, the less"), 
-side=1, line=1) 
+mtext(paste("Total COVID-2019 cases per 100K, as of", tail(RU.TIME, 1), "\nThe lighter, the less"),
+side=1, line=1)
 mtext("Russian Federation", font=2, cex=1.2, side=3, line=0)
 
 dev.off()
@@ -271,17 +271,17 @@ dev.off()
 # to the number of cases registered within past seven days
 # per 100K inhabitants;
 
-png("../plots/12.COVID.2019.map.density.regions.7_days_increment.per_100K.png", height=750, width=1000, res=120, pointsize=10)
+png("../plots/12.COVID.2019.map.density.regions.7_days_increment.per_100K.png", height=750, width=1500, res=120, pointsize=10)
 par(fg="white", bg=rgb(0,.1,.2,1))
 
 plot(ru.shape[order(ru.shape$LOCUS),], xlim=c(20,180), col="white", border="white")
-plot(ru.shape[order(ru.shape$LOCUS),], xlim=c(20,180), 
-col=rgb(.3,0,0,(pop.derived$DETECTED.7.100K/max(pop.derived$DETECTED.7.100K))), 
-border=rgb(.3,0,0,((pop.derived$DETECTED.7.100K/max(pop.derived$DETECTED.7.100K)))/4), 
+plot(ru.shape[order(ru.shape$LOCUS),], xlim=c(20,180),
+col=rgb(.3,0,0,(pop.derived$DETECTED.7.100K/max(pop.derived$DETECTED.7.100K))),
+border=rgb(.3,0,0,((pop.derived$DETECTED.7.100K/max(pop.derived$DETECTED.7.100K)))/4),
 add=TRUE)
 
-mtext(paste("COVID-2019 new cases over past 7 days per 100K, as of", tail(RU.TIME, 1), "\nThe lighter, the less"), 
-side=1, line=1) 
+mtext(paste("COVID-2019 new cases over past 7 days per 100K, as of", tail(RU.TIME, 1), "\nThe lighter, the less"),
+side=1, line=1)
 mtext("Russian Federation", font=2, cex=1.2, side=3, line=0)
 
 dev.off()
@@ -290,17 +290,17 @@ dev.off()
 # Map / regions as areas / colour intensity proportional
 # to the total number of active cases per 100K inhabitants;
 
-png("../plots/13.COVID.2019.map.density.regions.active.per_100K.png", height=750, width=1000, res=120, pointsize=10)
+png("../plots/13.COVID.2019.map.density.regions.active.per_100K.png", height=750, width=1500, res=120, pointsize=10)
 par(fg="white", bg=rgb(0,.1,.2,1))
 
 plot(ru.shape[order(ru.shape$LOCUS),], xlim=c(20,180), col="white", border="white")
-plot(ru.shape[order(ru.shape$LOCUS),], xlim=c(20,180), 
-col=rgb(.3,0,0,(pop.derived$ACTIVE.100K/max(pop.derived$ACTIVE.100K))), 
-border=rgb(.3,0,0,((pop.derived$ACTIVE.100K/max(pop.derived$ACTIVE.100K)))/4), 
+plot(ru.shape[order(ru.shape$LOCUS),], xlim=c(20,180),
+col=rgb(.3,0,0,(pop.derived$ACTIVE.100K/max(pop.derived$ACTIVE.100K))),
+border=rgb(.3,0,0,((pop.derived$ACTIVE.100K/max(pop.derived$ACTIVE.100K)))/4),
 add=TRUE)
 
-mtext(paste("COVID-2019 active cases per 100K, as of", tail(RU.TIME, 1), "\nThe lighter, the less"), 
-side=1, line=1) 
+mtext(paste("COVID-2019 active cases per 100K, as of", tail(RU.TIME, 1), "\nThe lighter, the less"),
+side=1, line=1)
 mtext("Russian Federation", font=2, cex=1.2, side=3, line=0)
 
 dev.off()
@@ -309,17 +309,17 @@ dev.off()
 # Map / regions as areas / colour intensity proportional
 # to the total number of active cases per 100K inhabitants;
 
-png("../plots/14.COVID.2019.map.density.regions.i.7.var.rmean.7.png", height=750, width=1000, res=120, pointsize=10)
+png("../plots/14.COVID.2019.map.density.regions.i.7.var.rmean.7.png", height=750, width=1500, res=120, pointsize=10)
 par(fg="white", bg=rgb(0,.1,.2,1))
 
 plot(ru.shape[order(ru.shape$LOCUS),], xlim=c(20,180), col="white", border="white")
-plot(ru.shape[order(ru.shape$LOCUS),], xlim=c(20,180), 
-col=rgb(.3,0,0,(1-pop.derived$i.7.var.rmean.7/max(pop.derived$i.7.var.rmean.7))^8), 
-border=rgb(.3,0,0,(((1-(pop.derived$i.7.var.rmean.7/max(pop.derived$i.7.var.rmean.7)))^8)/4)), 
+plot(ru.shape[order(ru.shape$LOCUS),], xlim=c(20,180),
+col=rgb(.3,0,0,(1-pop.derived$i.7.var.rmean.7/max(pop.derived$i.7.var.rmean.7))^8),
+border=rgb(.3,0,0,(((1-(pop.derived$i.7.var.rmean.7/max(pop.derived$i.7.var.rmean.7)))^8)/4)),
 add=TRUE)
 
-mtext(paste("COVID-2019 mean excessive smoothing over past 7 days, as of", tail(RU.TIME, 1), "\nThe lighter, the better"), 
-side=1, line=1) 
+mtext(paste("COVID-2019 mean excessive smoothing over past 7 days, as of", tail(RU.TIME, 1), "\nThe lighter, the better"),
+side=1, line=1)
 mtext("Russian Federation", font=2, cex=1.2, side=3, line=0)
 
 dev.off()
@@ -329,7 +329,7 @@ dev.off()
 png("../plots/41.COVID.2019.hist.i.7.var.rmean.7.png", height=750, width=1000, res=120, pointsize=10)
 par(mar=c(6,5,4,5)+.1, mgp=c(1.7,.5,-.5))
 
-hist.ad_hoc <- hist(pop.derived$i.7.var.rmean.7, 
+hist.ad_hoc <- hist(pop.derived$i.7.var.rmean.7,
 breaks=seq(0, ceiling(max(pop.derived$i.7.var.rmean.7)/.005)*.005, .005),
 col=8,
 main=paste("Russian Federation /", tail(RU.TIME, 1)),
@@ -383,13 +383,13 @@ png("../plots/15.COVID.2019.barplot.regions.png", height=1200, width=750, res=12
 par(mar=c(3.5,6,4,1)+.1, mgp=c(1.7,.5,-.5), cex.axis=.6)
 
 barplot(
-height = pop.derived[order(pop.derived$DETECTED),]$DETECTED, 
-names.arg = pop.derived[order(pop.derived$DETECTED),]$LOCUS, 
+height = pop.derived[order(pop.derived$DETECTED),]$DETECTED,
+names.arg = pop.derived[order(pop.derived$DETECTED),]$LOCUS,
 horiz=TRUE,
-ylab="", 
-xlab=paste("Total COVID-2019 cases, as of",max(covid.2019.ru.dyn$TIME)), 
+ylab="",
+xlab=paste("Total COVID-2019 cases, as of",max(covid.2019.ru.dyn$TIME)),
 main="Russian Federation",
-las=1, 
+las=1,
 axes=FALSE)
 
 axis(1, at = seq(0, 4*10^5, 1*10^5), labels=c("0", paste(seq(100, 400, 100), "K", sep="")))
@@ -404,13 +404,13 @@ png("../plots/16.COVID.2019.barplot.regions.log.10.png", height=1200, width=750,
 par(mar=c(3.5,6,4,1)+.1, mgp=c(1.7,.5,-.5), cex.axis=.6)
 
 barplot(
-height = log10(pop.derived[order(pop.derived$DETECTED),]$DETECTED), 
-names.arg = pop.derived[order(pop.derived$DETECTED),]$LOCUS, 
+height = log10(pop.derived[order(pop.derived$DETECTED),]$DETECTED),
+names.arg = pop.derived[order(pop.derived$DETECTED),]$LOCUS,
 horiz=TRUE,
-ylab="", 
-xlab=paste("Total COVID-2019 cases, as of",max(covid.2019.ru.dyn$TIME)), 
+ylab="",
+xlab=paste("Total COVID-2019 cases, as of",max(covid.2019.ru.dyn$TIME)),
 main="Russian Federation",
-las=1, 
+las=1,
 axes=FALSE)
 
 axis(1, at=log10(c(1,10,100,1000,10000,100000,1000000)), labels=c(1,10,100,"1K","10K","100K","1M"))
@@ -428,11 +428,11 @@ png("../plots/17.COVID.2019.barplot.regions.per_100K.png", height=1200, width=75
 par(mar=c(3.5,6,4,1)+.1, mgp=c(1.7,.5,-.5), cex.axis=.6)
 
 barplot(
-height = pop.derived[order(pop.derived$DETECTED.100K),]$DETECTED.100K, 
-names.arg = pop.derived[order(pop.derived$DETECTED.100K),]$LOCUS, 
+height = pop.derived[order(pop.derived$DETECTED.100K),]$DETECTED.100K,
+names.arg = pop.derived[order(pop.derived$DETECTED.100K),]$LOCUS,
 horiz=TRUE,
-ylab="", 
-xlab=paste("Total COVID-2019 cases per 100K, as of",max(covid.2019.ru.dyn$TIME)), 
+ylab="",
+xlab=paste("Total COVID-2019 cases per 100K, as of",max(covid.2019.ru.dyn$TIME)),
 main="Russian Federation",
 las=1)
 
@@ -447,11 +447,11 @@ png("../plots/18.COVID.2019.barplot.regions.per_100K.active.png", height=1200, w
 par(mar=c(3.5,6,4,1)+.1, mgp=c(1.7,.5,-.5), cex.axis=.6)
 
 barplot(
-height = pop.derived[order(pop.derived$ACTIVE.100K),]$ACTIVE.100K, 
-names.arg = pop.derived[order(pop.derived$ACTIVE.100K),]$LOCUS, 
+height = pop.derived[order(pop.derived$ACTIVE.100K),]$ACTIVE.100K,
+names.arg = pop.derived[order(pop.derived$ACTIVE.100K),]$LOCUS,
 horiz=TRUE,
-ylab="", 
-xlab=paste("Active COVID-2019 cases per 100K, as of",max(covid.2019.ru.dyn$TIME)), 
+ylab="",
+xlab=paste("Active COVID-2019 cases per 100K, as of",max(covid.2019.ru.dyn$TIME)),
 main="Russian Federation",
 las=1)
 
@@ -466,11 +466,11 @@ png("../plots/19.COVID.2019.barplot.regions.per_100K.detected_for_the_past_7d.pn
 par(mar=c(3.5,6,4,1)+.1, mgp=c(1.7,.5,-.5), cex.axis=.6, cex.lab=.9)
 
 barplot(
-height = pop.derived[order(pop.derived$DETECTED.7.100K),]$DETECTED.7.100K, 
-names.arg = pop.derived[order(pop.derived$DETECTED.7.100K),]$LOCUS, 
+height = pop.derived[order(pop.derived$DETECTED.7.100K),]$DETECTED.7.100K,
+names.arg = pop.derived[order(pop.derived$DETECTED.7.100K),]$LOCUS,
 horiz=TRUE,
-ylab="", 
-xlab=paste("Sum of COVID-2019 cases detected for the past 7 days per 100K, as of",max(covid.2019.ru.dyn$TIME)), 
+ylab="",
+xlab=paste("Sum of COVID-2019 cases detected for the past 7 days per 100K, as of",max(covid.2019.ru.dyn$TIME)),
 main="Russian Federation",
 las=1)
 
@@ -502,7 +502,7 @@ covid.2019.ru.dyn.tot.primary[[i]]$i,
 type="h",
 main=names(covid.2019.ru.dyn.tot.primary)[i],
 xlab="",
-ylab="COVID-19 cases detected per day", 
+ylab="COVID-19 cases detected per day",
 col="darkred",
 lwd=1.5,
 axes=FALSE)
@@ -534,7 +534,7 @@ covid.2019.ru.dyn.tot.primary[[i]]$d,
 type="h",
 main=names(covid.2019.ru.dyn.tot.primary)[i],
 xlab="",
-ylab="COVID-19 deaths reported per day", 
+ylab="COVID-19 deaths reported per day",
 col="black",
 lwd=1.5,
 axes=FALSE)
@@ -564,8 +564,8 @@ for(i in 1:length(covid.2019.ru.dyn.tot.primary)){
 png(file = paste("../plots/regions/linear/COVID.2019.cumulated.linear.", gsub(" ", "_", names(covid.2019.ru.dyn.tot.primary)[i]), ".png", sep=""), height=750, width=1000, res=120, pointsize=10)
 par(mar=c(6,5,4,5)+.1, lwd=2)
 
-plot(covid.2019.ru.dyn.tot.primary[[i]]$TIME, cumsum(covid.2019.ru.dyn.tot.primary[[i]]$i), 
-type="n", 
+plot(covid.2019.ru.dyn.tot.primary[[i]]$TIME, cumsum(covid.2019.ru.dyn.tot.primary[[i]]$i),
+type="n",
 main=paste("Russian Federation /", names(covid.2019.ru.dyn.tot.primary)[i]),
 xlab="",
 ylab="COVID-2019 cases detected",
@@ -627,8 +627,8 @@ for(i in 1:length(covid.2019.ru.dyn.tot.primary)){
 png(file = paste("../plots/regions/COVID.2019.cumulated.log10.", gsub(" ", "_", names(covid.2019.ru.dyn.tot.primary)[i]), ".png", sep=""), height=750, width=1000, res=120, pointsize=10)
 par(mar=c(6,5,4,5)+.1, lwd=2)
 
-plot(covid.2019.ru.dyn$TIME, log10(cumsum(covid.2019.ru.dyn$i)), 
-type="n", 
+plot(covid.2019.ru.dyn$TIME, log10(cumsum(covid.2019.ru.dyn$i)),
+type="n",
 ylim=c(0, log10(tail(cumsum(covid.2019.ru.dyn$i), 1))),
 main=paste("Russian Federation /", names(covid.2019.ru.dyn.tot.primary)[i]),
 xlab="",
@@ -694,8 +694,8 @@ for(i in 1:length(covid.2019.ru.dyn.tot.derived)){
 	png(file = paste("../plots/regions/increments/i.7.var/COVID.2019.momentary.i.7.var.", gsub(" ", "_", names(covid.2019.ru.dyn.tot.primary)[i]), ".png", sep=""), height=750, width=1000, res=120, pointsize=10)
 	par(mar=c(6,5,4,5)+.1, lwd=2)
 
-	plot(covid.2019.ru.dyn.tot.derived[[i]]$TIME, covid.2019.ru.dyn.tot.derived[[i]]$i.7.var, 
-	type="n", 
+	plot(covid.2019.ru.dyn.tot.derived[[i]]$TIME, covid.2019.ru.dyn.tot.derived[[i]]$i.7.var,
+	type="n",
 	ylim=c(0, 5),
 	main=paste("Russian Federation /", names(covid.2019.ru.dyn.tot.derived)[i]),
 	xlab="",
@@ -734,8 +734,8 @@ for(i in 1:length(covid.2019.ru.dyn.tot.derived)){
 	png(file = paste("../plots/regions/increments/R.RPN/COVID.2019.momentary.R.RPN.", gsub(" ", "_", names(covid.2019.ru.dyn.tot.primary)[i]), ".png", sep=""), height=750, width=1000, res=120, pointsize=10)
 	par(mar=c(6,5,4,5)+.1, lwd=2)
 
-	plot(covid.2019.ru.dyn.tot.derived[[i]]$TIME, covid.2019.ru.dyn.tot.derived[[i]]$R.RPN, 
-	type="n", 
+	plot(covid.2019.ru.dyn.tot.derived[[i]]$TIME, covid.2019.ru.dyn.tot.derived[[i]]$R.RPN,
+	type="n",
 	ylim=c(0, 7),
 	main=paste("Russian Federation /", names(covid.2019.ru.dyn.tot.derived)[i]),
 	xlab="",
@@ -775,8 +775,8 @@ for(i in 1:length(covid.2019.ru.dyn.tot.derived)){
 png(file = "../plots/90.COVID.2019.SPb.i_smooth.png", height=750, width=1000, res=120, pointsize=10)
 par(mar=c(6,5,4,5)+.1)
 
-plot(covid.2019.ru.dyn.tot.derived[[68]]$TIME, covid.2019.ru.dyn.tot.derived[[68]]$i, 
-type="n", 
+plot(covid.2019.ru.dyn.tot.derived[[68]]$TIME, covid.2019.ru.dyn.tot.derived[[68]]$i,
+type="n",
 main=paste("Russian Federation /", names(covid.2019.ru.dyn.tot.derived)[68]),
 xlab="",
 ylab="COVID-2019 cases detected",
@@ -808,8 +808,8 @@ dev.off()
 png(file = "../plots/91.COVID.2019.SPb.d_smooth.png", height=750, width=1000, res=120, pointsize=10)
 par(mar=c(6,5,4,5)+.1)
 
-plot(covid.2019.ru.dyn.tot.derived[[68]]$TIME, covid.2019.ru.dyn.tot.derived[[68]]$d, 
-type="n", 
+plot(covid.2019.ru.dyn.tot.derived[[68]]$TIME, covid.2019.ru.dyn.tot.derived[[68]]$d,
+type="n",
 main=paste("Russian Federation /", names(covid.2019.ru.dyn.tot.derived)[68]),
 xlab="",
 ylab="COVID-2019 deaths",
@@ -841,8 +841,8 @@ dev.off()
 png(file = "../plots/92.COVID.2019.SPb.ratio_ir.png", height=750, width=1000, res=120, pointsize=10)
 par(mar=c(6,5,4,5)+.1)
 
-plot(covid.2019.ru.dyn.tot.derived[[68]]$TIME, covid.2019.ru.dyn.tot.derived[[68]]$r / covid.2019.ru.dyn.tot.derived[[68]]$i, 
-type="n", 
+plot(covid.2019.ru.dyn.tot.derived[[68]]$TIME, covid.2019.ru.dyn.tot.derived[[68]]$r / covid.2019.ru.dyn.tot.derived[[68]]$i,
+type="n",
 main=paste("Russian Federation /", names(covid.2019.ru.dyn.tot.derived)[68]),
 xlab="",
 ylab="Ratio of COVID-2019 cases recovered to detected",
