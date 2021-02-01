@@ -256,7 +256,7 @@ df_maps <- ru_reg %>% left_join(pop.derived, "LOCUS")
 df_maps %>%
     ggplot()+
     geom_sf(
-        aes(fill = log10(DETECTED)/max(log10(DETECTED))^4),
+        aes(fill = (log10(DETECTED)/max(log10(DETECTED)))^4),
         color = NA
     )+
     geom_sf(data = ru_bord, size = .05, color = "#ffffff")+ # borders
